@@ -22,21 +22,25 @@ rsync -Aavx /etc/httpd /mnt/nfs/backups/apache/httpd-dirbkp_`date +"%Y-%m"`/
 echo "Backing up McMyAdmin..."
 mkdir /mnt/nfs/backups/McMyAdmin/McMyAdmin-dirbkp_`date +"%Y-%m"`/
 rsync -Aavx /home/snyssen/McMyAdmin/Backups /mnt/nfs/backups/McMyAdmin/McMyAdmin-dirbkp_`date +"%Y-%m"`/Backups/
-# 6. backup databases
+# 6. backup Terraria
+echo "Backing up Terraria Worlds"
+mkdir /mnt/nfs/backups/Terraria/Worlds_`date +"%Y-%m%d"`/
+rsync -Aavx /home/snyssen/.local/share/Terraria/Worlds /mnt/nfs/backups/Terraria/Worlds_`date +"%Y-%m%d"`/
+# 7. backup databases
 echo "Backing up all databases..."
 mysqldump --defaults-file=/home/snyssen/.mysql.cnf --all_databases > /mnt/nfs/backups/mysqldump/dump_`date +"%Y-%m-%d"`.sql
 echo "Done backing up !"
 echo "-- Cleaning up ---"
-# 7. remove maintenance mode of Nextcloud
+# 8. remove maintenance mode of Nextcloud
 echo "Removing maintenance mode from Nextcloud..."
 sudo -u apache php /var/lib/nextcloud/occ maintenance:mode --off
-# 8. Unmount NFS
+# 9. Unmount NFS
 echo "Unmounting NFS partition..."
 umount /mnt/nfs
-# 9. Shutdown of backup server
+# 10. Shutdown of backup server
 echo "Shutting down backup server..."
 ssh root@192.168.1.13 shutdown -h now
-# 10. Shutdown of main server
+# 11. Shutdown of main server
 echo "All done !"
 wall "===== SHUTTING DOWN MAIN SERVER FOR THE NIGHT IN 15 MINUTES ====="
 wall "To prevent shutdown you may use sudo shutdown -c"
