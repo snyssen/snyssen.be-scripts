@@ -39,7 +39,7 @@ echo "Unmounting NFS partition..."
 umount /mnt/nfs
 # 10. Shutdown of backup server
 echo "Shutting down backup server..."
-ssh root@192.168.1.13 shutdown -h now
+ssh root@192.168.1.13 poweroff
 # 11. Shutdown of main server
 echo "All done !"
 wall "===== SHUTTING DOWN MAIN SERVER FOR THE NIGHT IN 15 MINUTES ====="
